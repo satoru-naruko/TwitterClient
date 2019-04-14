@@ -17,7 +17,6 @@ namespace TwitterClient.ViewModels
 {
     public class TweetTimeLineViewModel : BindableBase
     {
-        //public Dictionary<String, ObservableCollection<Tweet>> Tweets { get; set; } = new Dictionary<String, ObservableCollection<Tweet>>();
         public ObservableCollection<Tweet> Tweets { get; set; } = new ObservableCollection<Tweet>();
         
         public int Count { get; private set; } = 100;
@@ -39,12 +38,9 @@ namespace TwitterClient.ViewModels
 
             this.UpdateCommand = new DelegateCommand<object[]>(this.GetTweetsAsync);
 
-            //this.Tweets.Add(new ObservableCollection<Tweet>());
-
             // 複数スレッドからコレクション操作できるようにする
             BindingOperations.EnableCollectionSynchronization(Tweets/*[this.Account]*/, new object());
             
-            //GetTweetsAsync("LiSA_OLiVE");
             GetTweetsAsync(50,"LiSA_OLiVE");
         }
 
@@ -60,16 +56,6 @@ namespace TwitterClient.ViewModels
         {
 
             await Task.Run(() => AsyncAddList2());
-
-            /* これは非同期で動く */
-            //await Task.Run(() => {
-            //    for (int i = 0; i < 100; i++)
-            //    {
-            //        //Tweets.Add(new Tweet($"naruko + {i}", "hello waorla"));
-            //        Console.WriteLine("test");
-            //        Thread.Sleep(10);
-            //    }
-            //});
 
         }
         // 
@@ -147,7 +133,7 @@ namespace TwitterClient.ViewModels
                     {
                         foreach (var tweet in tweets)
                         {
-                            Tweets/*[Account]*/.Add(new Tweet(tweet.User.ScreenName, tweet.Text, tweet.Entities?.Media?[0].MediaUrl));
+                            Tweets.Add(new Tweet(tweet.User.ScreenName, tweet.Text, tweet.Entities?.Media?[0].MediaUrl));
                             Thread.Sleep(100);
                         }
                     }
@@ -160,12 +146,5 @@ namespace TwitterClient.ViewModels
                 throw;
             }
         }
-
-
-
-
-
-
     }
-
 }
