@@ -1,0 +1,52 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:Prism="http://prismlibrary.com/"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Class="TwitterClient.Views.MainWindow"
+    xmlns:vm="clr-namespace:TwitterClient.ViewModels"
+        Prism:ViewModelLocator.AutoWireViewModel="True" 
+        d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="1200"
+        Width="300"
+>
+    <!--<Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>-->
+    <i:Interaction.Triggers>
+        <Prism:InteractionRequestTrigger SourceObject="{Binding AlertRequest}">
+            <Prism:PopupWindowAction />
+        </Prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+        <!--<Grid.RowDefinitions>
+            -->
+        <!--行を2つ定義-->
+        <!--
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>-->
+        <!--<Grid.ColumnDefinitions>
+            -->
+        <!--列を2つ定義-->
+        <!--
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>-->
+
+        <!--<Label Content="{Binding Input, Mode=OneWay}" Margin="27,388,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="79"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="0,389,0,0" TextWrapping="Wrap" Text="{Binding Input, Mode=OneWay}" VerticalAlignment="Top" Width="130"/>-->
+        <Button Content="Change" Command="{Binding NavigateCommand}" CommandParameter="TweetTimeLine" Style="{StaticResource btn-normal}"/>
+        <ContentControl Prism:RegionManager.RegionName="ContentRegion" Margin="0" Padding="0" Grid.Row="1"/>
+    </Grid>
+</Window>

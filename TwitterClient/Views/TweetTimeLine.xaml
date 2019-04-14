@@ -1,0 +1,157 @@
+﻿<UserControl x:Class="TwitterClient.Views.TweetTimeLine"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:Prism="http://prismlibrary.com/"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cnv="clr-namespace:TwitterClient.Converter"
+             xmlns:vm="clr-namespace:TwitterClient.ViewModels"
+             xmlns:ctl="clr-namespace:TwitterClient.Control"
+             xmlns:mdl="clr-namespace:TwitterClient.Model"
+             Prism:ViewModelLocator.AutoWireViewModel="True" 
+            d:DataContext="{d:DesignInstance vm:TweetTimeLineViewModel}"
+            mc:Ignorable="d"
+
+            >
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <cnv:MultiBindingConverter x:Key="multiBind"/>
+            <cnv:NullImageConverter x:Key="nullImageConverter"/>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <!--<StackPanel Grid.RowSpan="2">
+            <Button Content="Alert"
+                    Command="{Binding AlertCommand}" />
+            -->
+    <!--UpdateSourceTrigger=PropertyChangedにするとテキストの中身が変わるとソースが更新される-->
+
+    <!--<TextBox Text="{Binding Input, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>-->
+    <Grid Background="{StaticResource BackGroundColor_Dark}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="23*"/>
+            <RowDefinition Height="1057*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <Label Content="{Binding Account}" 
+                       VerticalAlignment="Top" 
+                       HorizontalAlignment="Left" Name="account" 
+                       Style="{StaticResource lb-normal}"
+                       Width="150"/>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource multiBind}">
+                            <Binding Path="Count"/>
+                            <Binding Path="Account"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <Button Content="⇦" 
+                        Command="{Binding UpdateCommand}" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top" 
+                        Width="50"
+                        Margin="0,0,0,0"
+                        Style="{StaticResource btn-normal}"
+                        />
+                <Button Content="⇒" 
+                        Command="{Binding UpdateCommand}" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top" 
+                        Width="50"
+                        Margin="10,0,0,0"
+                        Style="{StaticResource btn-normal}"
+                        >
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource multiBind}">
+                            <Binding Path="Count" />
+                            <Binding Path="Account" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+            </StackPanel>
+
+        <ListBox x:Name="listBox"
+                Grid.Row="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                ItemsSource="{Binding Tweets}"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                Background="Transparent"
+                VirtualizingPanel.ScrollUnit="Pixel"
+                Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"
+                MaxHeight="1200"
+                Padding="0"
+                Margin="0"
+                BorderThickness="0" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Path=Name}" Margin="5" Foreground="#FFEED4D4" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Path=Text}" Margin="5" TextWrapping="Wrap" Foreground="#FFEED4D4"/>
+                        <Image Source="{Binding Path=ImageUrl , Converter={StaticResource nullImageConverter}}" Stretch="Fill" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="OverridesDefaultStyle" Value="True" />
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border Margin="0" Padding="0" BorderThickness="1" BorderBrush="Gray">
+                                    <ContentPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Plum" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF66B7BF" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+    </Grid>
+    <!--<Button Content="更新" 
+            Command="{Binding UpdateCommand}" 
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Top" 
+            Width="50"
+            Margin="10,0,0,0"
+            Style="{StaticResource btn-normal}"
+            >
+        <Button.CommandParameter>
+            <MultiBinding Converter="{StaticResource multiBind}">
+                <Binding Path="Count" />
+                <Binding Path="Account" />
+            </MultiBinding>
+        </Button.CommandParameter>
+    </Button>-->
+
+    <!--<TabControl Grid.Row="1" Background="#FF3E2323" Padding="1" BorderThickness="0" HorizontalAlignment="Center">
+            <TabItem Header="Tab 1">
+
+            </TabItem>
+            <TabItem Header="Tab 3">
+                --><!--<ListBox HorizontalAlignment="Center"
+                         VerticalAlignment="Top" 
+                         ItemsSource="{Binding Tweets}" 
+                         ItemTemplate="{StaticResource TweetTimeLineDataTemplate}"
+                         Visibility="Visible" Margin="0,1,0,0"                         
+                         >
+                </ListBox>--><!--
+            </TabItem>
+        </TabControl>-->
+</UserControl>

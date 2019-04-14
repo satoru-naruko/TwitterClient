@@ -1,0 +1,9 @@
+﻿################################################################################
+# この .gitignore ファイルは Microsoft(R) Visual Studio によって自動的に作成されました。
+################################################################################
+
+/.vs/TwitterClient
+/packages
+/TwitterClient/obj
+/TwitterClient/bin
+/TwitterClient/.vs
